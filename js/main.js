@@ -1,29 +1,28 @@
 /* [MRF 2022-07-03] products are created */
-const Products = 
-[
-    {
-        id:1,
-        name: 'iPhone 11',
-        price: '120.000',
-        description: 'iphone-11',
-        image: 'images/iphone-11.png'
-    },
-    {
-        id:2,
-        name: 'iPhone 12 pro',
-        price: '150.000',
-        description: 'iphone-12-pro',
-        image: 'images/iphone-12-pro.png'
-    },
-    {
-        id:3,
-        name: 'iPhone 13 pro',
-        price: '200.000',
-        description: 'iphone-13-pro',
-        image: 'images/iphone-13.png'
-    },
-
-]
+// const Products = 
+// [
+//     {
+//         id:1,
+//         name: 'iPhone 11',
+//         price: '120.000',
+//         description: 'iphone-11',
+//         image: 'images/iphone-11.png'
+//     },
+//     {
+//         id:2,
+//         name: 'iPhone 12 pro',
+//         price: '150.000',
+//         description: 'iphone-12-pro',
+//         image: 'images/iphone-12-pro.png'
+//     },
+//     {
+//         id:3,
+//         name: 'iPhone 13 pro',
+//         price: '200.000',
+//         description: 'iphone-13-pro',
+//         image: 'images/iphone-13.png'
+//     },
+// ]
 
 const loadEvents = () =>
 {
@@ -66,7 +65,47 @@ const loadProducts = (prods) =>
     loadEvents();
 }
 
-loadProducts(Products); // Products and events are loaded on the initial load of the page
+// loadProducts(Products); // Products and events are loaded on the initial load of the page
+
+// fetch only 
+// fetch('/data.json')
+// .then((response) => response.json())
+// .then((data) =>{
+//     loadProducts(data);
+// })
+
+// fetch with asynchronous function
+// const getProducts = async () =>
+// {
+//     try
+//     {
+//         const response = await fetch('/data.json')
+//         const data = await response.json();
+//         // console.log('data: ' , data);
+//         loadProducts(data);
+//     }
+//     catch(error)
+//     {   
+//         console.log('error: ' , error);
+//     }
+// }
+// getProducts();
+
+// fetch with anonymous asynchronous function
+(async ()=>{
+    try
+    {
+        const response = await fetch('/data.json')
+        const data = await response.json();
+        // console.log('data: ' , data);
+        loadProducts(data);
+    }
+    catch(error)
+    {   
+        console.log('error: ' , error);
+    }
+})();
+
 
 
 
