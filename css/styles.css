@@ -59,3 +59,17 @@ section{
 .card img{
     width: 100%;
 }
+
+/*header styles*/
+header{
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #fff;
+    justify-content: flex-end;
+    padding: 1em;
+}
+
+header div label {
+    font-size: 1.125em;
+    font-family: 'Poppins',sans-serif;
+}

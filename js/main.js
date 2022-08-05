@@ -1,29 +1,36 @@
-/* [MRF 2022-07-03] products are created */
-const Products = 
-[
+const Products = [];
+const getProducts = async () =>
+{
+    try
     {
-        id:1,
-        name: 'iPhone 11',
-        price: '120.000',
-        description: 'iphone-11',
-        image: 'images/iphone-11.png'
-    },
+        const response = await fetch("/data.json");
+        const data = await response.json();
+        console.log("data from json: " , data);
+        loadProducts(data); // Products and events are loaded on the initial load of the page
+        Products.push(...data); // Save products to a local array
+    }
+    catch(error)
     {
-        id:2,
-        name: 'iPhone 12 pro',
-        price: '150.000',
-        description: 'iphone-12-pro',
-        image: 'images/iphone-12-pro.png'
-    },
-    {
-        id:3,
-        name: 'iPhone 13 pro',
-        price: '200.000',
-        description: 'iphone-13-pro',
-        image: 'images/iphone-13.png'
-    },
+        console.log(error);
+    }
+}
 
-]
+getProducts();
+
+// fetch with anonymous asynchronous function
+// (async()=>{
+//     try
+//     {
+//         const response = await fetch("/data.json");
+//         const data = await response.json();
+//         console.log("data from json: " , data);
+//         loadProducts(data);
+//     }
+//     catch(error)
+//     {
+//         console.log(error);
+//     }
+// })();
 
 const loadEvents = () =>
 {
@@ -66,7 +73,17 @@ const loadProducts = (prods) =>
     loadEvents();
 }
 
-loadProducts(Products); // Products and events are loaded on the initial load of the page
+const loadUser = () =>
+{
+    let user = JSON.parse(localStorage.getItem('user'))
+    console.log('user desde index: ',user);
+    let userContainer = document.getElementById('username');
+    let label = document.createElement("label");
+    label.innerText = ` usuario: ${user.username} `;
+    userContainer.appendChild(label);
+}
+
+loadUser(); // Uploading the username to the site
 
 
 
