@@ -13,10 +13,45 @@ section{
     display: flex;
     width: 100%;
     min-width: 350px;
-    height: 100vh;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
+    padding: 4em;
+}
+
+#cart{
+    height: auto;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0px auto;
+}
+
+#cart #cartContainer{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#cart #cartContainer h2{
+    width: 100%;
+    text-align:center;
+    font-family: 'Poppins',sans-serif;
+    margin-bottom: 1em;
+}
+
+#cart #cartContainer .cart-item{
+    background-color: #ccc;
+    width: 100%;
+    margin: 5px 0px;
+    display: flex;
+    justify-content: space-between;
+    font-family: Helvetica, sans-serif;
+    padding: 1em;
+}
+#cart #cartContainer .cart-item h4{
+    width: 250px;
+    text-align:center;
+    text-align: left;
 }
 
 .card{

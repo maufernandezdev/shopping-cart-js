@@ -6,7 +6,7 @@ const Products =
         name: 'iPhone 11',
         price: '120.000',
         description: 'iphone-11',
-        image: 'images/iphone-11.png'
+        image: 'images/iphone-11.png',
     },
     {
         id:2,
@@ -22,51 +22,93 @@ const Products =
         description: 'iphone-13-pro',
         image: 'images/iphone-13.png'
     },
-
 ]
 
+const cart = [];
+
+// every time a product is added the cart is updated - interaction with HTML
+const updateCart = (cart) =>
+{
+    let cartContainer = document.querySelector('#cart');
+    // Get the child element node
+    let container = document.getElementById("cartContainer");
+    if(container)
+    {
+        container.parentNode.removeChild(container);
+    }
+    let div = document.createElement('div');
+    div.setAttribute('id','cartContainer');
+    div.innerHTML += ` <h2>Carrito de compras</h2>`;
+    for (const product of cart)
+    {
+        div.innerHTML += `
+            <div class="cart-item">
+                <h4>Producto: ${product.name}</h4>
+                <h4>Precio por unidad: ${product.price}</h4>
+                <h4>Cantidad: ${product.quantity}</h4>
+            </div>
+        `;
+    }
+
+    cartContainer.appendChild(div);
+}
+
+// click event is loaded to each button - events
 const loadEvents = () =>
 {
-    let buttons = document.getElementsByClassName('add'); // the buttons are obtained to assign them a function on the click
-    console.log(buttons); // show HTML collection
-    for (const element of buttons)
+    let buttons = document.querySelectorAll('.button');
+    for (const button of buttons) 
     {
-        element.addEventListener('click', ()=>{
-            console.log(element.id); // show selected id 
-            alert("se seleccionó el producto con id: " + element.id);
-            // here you should add the product to the cart, based on the selected id
-            // I recommend doing it using a function and sending the id of the selected product
-        });
+        button.addEventListener('click', ()=>{
+
+            let found = cart.find(element => element.id == button.id);
+            if(found)
+            {
+                // esta en el carrito
+                found.quantity++;
+            }
+            else
+            {
+                let product = Products.find(element => element.id == button.id);
+                if(product)
+                {
+                    let newProduct = {
+                        id:product.id,
+                        name: product.name,
+                        price: product.price,
+                        description: product.description,
+                        image: product.image,
+                        quantity: 1
+                    }
+                    cart.push(newProduct);
+                }
+            }
+
+            updateCart(cart);
+        })
     }
 }
 
-/* [MRF 2022-07-03] Products are loaded */
-const loadProducts = (prods) =>
-{   
-    let container = document.getElementsByClassName('container'); // the container element of the DOM is obtained and then I am going to insert the products
-    
-    // then I go through the array of products to create a card for each one
-    for (const element of prods)
-    {   
-        let div = document.createElement("div"); // div creation
-        div.setAttribute("class", "card"); // setting a class for my new div
-        div.innerHTML = 
-        ` 
-            <img src="${element.image}" alt="${element.description}">
-            <h3>$${element.price}</h3>
-            <h4>${element.name}</h4>
-            <button id="${element.id}" class='button add'>Agregar al carrito</button> 
+// dynamic loading of products - interaction with HTML
+const loadProducts = (Products) =>
+{
+    let container = document.querySelector('#container');
+    for (const product of Products)
+    {
+        let div = document.createElement('div');
+        div.setAttribute('class', 'card');
+        div.innerHTML = `
+            <img src="${product.image}" alt="${product.description}">
+            <h3>${product.price}</h3>
+            <h4>${product.name}</h4>
+            <button class="button" id="${product.id}">Agregar al carrito</button>
         `;
-        // It is important that the button has the id of the product to which it refers
-        // this will help to later recognize it when clicked
-        container[0].appendChild(div);
+        container.appendChild(div);
     }
-
-    // once the products are loaded, the events are loaded to recognize the card
     loadEvents();
 }
 
-loadProducts(Products); // Products and events are loaded on the initial load of the page
+loadProducts(Products);
 
 
 
