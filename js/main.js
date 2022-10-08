@@ -1,56 +1,26 @@
-/* [MRF 2022-07-03] products are created */
-const Products = 
-[
-    {
-        id:1,
-        name: 'iPhone 11',
-        price: '120.000',
-        description: 'iphone-11',
-        image: 'images/iphone-11.png',
-    },
-    {
-        id:2,
-        name: 'iPhone 12 pro',
-        price: '150.000',
-        description: 'iphone-12-pro',
-        image: 'images/iphone-12-pro.png'
-    },
-    {
-        id:3,
-        name: 'iPhone 13 pro',
-        price: '200.000',
-        description: 'iphone-13-pro',
-        image: 'images/iphone-13.png'
-    },
-]
+const Products = [];
+const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-const cart = [];
-
-// every time a product is added the cart is updated - interaction with HTML
-const updateCart = (cart) =>
+const setQuantity = () =>
 {
-    let cartContainer = document.querySelector('#cart');
-    // Get the child element node
-    let container = document.getElementById("cartContainer");
-    if(container)
+    const label = document.querySelector('#cart-quantity');
+    const total = cart.reduce((acc, item) => acc + item.quantity, 0);
+    if(total > 0)
     {
-        container.parentNode.removeChild(container);
+        label.innerText = total;
     }
-    let div = document.createElement('div');
-    div.setAttribute('id','cartContainer');
-    div.innerHTML += ` <h2>Carrito de compras</h2>`;
-    for (const product of cart)
-    {
-        div.innerHTML += `
-            <div class="cart-item">
-                <h4>Producto: ${product.name}</h4>
-                <h4>Precio por unidad: ${product.price}</h4>
-                <h4>Cantidad: ${product.quantity}</h4>
-            </div>
-        `;
-    }
+}
 
-    cartContainer.appendChild(div);
+const notification = (text) =>
+{
+    Toastify({
+        text: text,
+        className: "info",
+        style: {
+          background: "#fff",
+          color:"#00a650"
+        }
+      }).showToast();
 }
 
 // click event is loaded to each button - events
@@ -66,6 +36,8 @@ const loadEvents = () =>
             {
                 // esta en el carrito
                 found.quantity++;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                notification('Producto agregado con éxito!')
             }
             else
             {
@@ -81,10 +53,11 @@ const loadEvents = () =>
                         quantity: 1
                     }
                     cart.push(newProduct);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    notification('Producto agregado con éxito!');
                 }
             }
-
-            updateCart(cart);
+            setQuantity(cart);
         })
     }
 }
@@ -94,7 +67,7 @@ const loadProducts = (Products) =>
 {
     let container = document.querySelector('#container');
     for (const product of Products)
-    {
+    {   
         let div = document.createElement('div');
         div.setAttribute('class', 'card');
         div.innerHTML = `
@@ -108,7 +81,24 @@ const loadProducts = (Products) =>
     loadEvents();
 }
 
-loadProducts(Products);
+const getData = async () =>
+{
+    try
+    {
+        const response = await fetch('/data.json');
+        const data = await response.json();
+        loadProducts(data);
+        Products.push(...data);
+        setQuantity();
+    }
+    catch(e)
+    {
+        console.log(e);
+    }
+}
+
+getData();
+
 
 
 

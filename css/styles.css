@@ -8,6 +8,33 @@ body{
     background-color: #ddd;
 }
 
+/* header */
+header{
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 1.5em;
+    border-bottom: 1px solid #000;
+}
+
+header a{
+    text-decoration: none;
+}
+
+header a label{
+    color: #0969da;
+    font-family: 'Poppins',sans-serif;
+    position: relative;
+    left: 2.3em;
+    top:-1.3em;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+header a i{
+    font-size: 2.7em;
+    color: #000c;
+}
 
 section{
     display: flex;
@@ -19,41 +46,7 @@ section{
     padding: 4em;
 }
 
-#cart{
-    height: auto;
-    width: 100%;
-    max-width: 1240px;
-    margin: 0px auto;
-}
-
-#cart #cartContainer{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-#cart #cartContainer h2{
-    width: 100%;
-    text-align:center;
-    font-family: 'Poppins',sans-serif;
-    margin-bottom: 1em;
-}
-
-#cart #cartContainer .cart-item{
-    background-color: #ccc;
-    width: 100%;
-    margin: 5px 0px;
-    display: flex;
-    justify-content: space-between;
-    font-family: Helvetica, sans-serif;
-    padding: 1em;
-}
-#cart #cartContainer .cart-item h4{
-    width: 250px;
-    text-align:center;
-    text-align: left;
-}
-
+/* cards */
 .card{
     width: 210px;
     height: auto;
@@ -93,4 +86,8 @@ section{
 
 .card img{
     width: 100%;
+}
+
+.info{
+    font-family: 'Poppins',sans-serif;
 }
